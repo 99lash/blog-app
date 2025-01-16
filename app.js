@@ -4,23 +4,19 @@ const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
-// const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5001;
 const dbURI = process.env.dbURI;
 
-// mongoose.connect(dbURI)
-//   .then(() => app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}`)))
-//   .catch(err => console.log(err));
-
-mongoose
-  .connect(dbURI)
-  .then(() => {
-    console.log('Connected to database');
-    // app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
-  })
-  .catch(err => {
-    console.log('Could not connect to database');
-    console.error(err);
-  });
+// mongoose
+//   .connect(dbURI)
+//   .then(() => {
+//     console.log('Connected to database');
+//     app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
+//   })
+//   .catch(err => {
+//     console.log('Could not connect to database');
+//     console.error(err);
+//   });
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -43,8 +39,8 @@ app.get('/', (req, res) => {
   res.render('index', { title: 'Home', greet: 'Home page' });
 });
 
-// blog routes
-app.use('/blogs', blogRoutes);
+// routes
+// app.use('/blogs', blogRoutes);
 
 app.use((req, res) => {
   res.status(404).render('404', { title: '404', message: 'Ooops, page not found!' });
