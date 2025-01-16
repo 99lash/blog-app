@@ -14,7 +14,7 @@ const dbURI = process.env.dbURI;
 mongoose.connect(dbURI)
   .then(() => {
     console.log('Connected to database');
-    app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
+    // app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
   })
   .catch(err => {
     console.log('Could not connect to database');
@@ -41,8 +41,15 @@ app.get('/', (req, res) => {
 });
 
 // blog routes
-app.use('/blogs', blogRoutes)
+app.use('/blogs', blogRoutes);
 
 app.use((req, res) => {
   res.status(404).render('404', { title: '404', message: 'Ooops, page not found!' });
-})
+});
+
+app.use((err, req, res) => {
+  console.error(err);
+  res.status(500).send('Something went wrong.');
+});
+
+module.exports = app;
