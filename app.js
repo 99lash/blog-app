@@ -5,7 +5,7 @@ const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-const dbURI = process.env.dbURI || `mongodb+srv://ashrw:Kitingzed123@cluster0.lyx7o.mongodb.net/node-tutorial?retryWrites=true&w=majority&appName=Cluster0`;
+const dbURI = process.env.dbURI;
 
 // mongoose.connect(dbURI)
 //   .then(() => app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}`)))
@@ -16,7 +16,10 @@ mongoose.connect(dbURI)
     console.log('Connected to database');
     app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
   })
-  .catch(console.error)
+  .catch(err => {
+    console.log('Could not connect to database');
+    console.error(err);
+  });
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
