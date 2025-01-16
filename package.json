@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node --env-file=.env app.js",
     "watch": "node --watch app.js",
     "dev": "nodemon --env-file=.env app.js"
   },
