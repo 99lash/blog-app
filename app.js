@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+// const PORT = process.env.PORT || 5001;
 const dbURI = process.env.dbURI;
 
 // mongoose.connect(dbURI)
@@ -22,6 +22,7 @@ mongoose.connect(dbURI)
   });
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
