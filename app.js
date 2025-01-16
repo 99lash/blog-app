@@ -35,7 +35,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.get('/', (req, res) => {
   res.render('index', { title: 'Home', greet: 'Home page' });
 });
@@ -44,7 +43,7 @@ app.get('/', (req, res) => {
 app.use('/blogs', blogRoutes);
 
 app.use((req, res) => {
-  res.status(404).render('404', { title: '404', message: 'Ooops, page not found!' });
+  res.status(404).render('404', { title: '404', message: 'Ooops, page not found!'});
 });
 
 app.use((err, req, res) => {
