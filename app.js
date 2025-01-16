@@ -11,7 +11,8 @@ const dbURI = process.env.dbURI;
 //   .then(() => app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}`)))
 //   .catch(err => console.log(err));
 
-mongoose.connect(dbURI)
+mongoose
+  .connect(dbURI)
   .then(() => {
     console.log('Connected to database');
     // app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
   })
   next();
 });
+
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Home', greet: 'Home page' });
