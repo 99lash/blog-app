@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head.ejs') %>
+
+  <body>
+    <a href="/blogs">Back to Blogs</a>
+    <div class="blog content">
+      <div class="blog-card">
+        <h2 id="title" data-title="<%= blog.title %>">
+          <%= blog.title %>
+        </h2>
+        <p>
+          <%= blog.body %>
+        </p>
+        <button type="button" id="delete-btn" data-doc="<%= blog.id %>">Delete</button>
+      </div>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+    <script>
+      const deleteBtn = document.querySelector('#delete-btn');
+      const titleTag = document.querySelector('h2#title');
+
+      deleteBtn.addEventListener('click', e => {
+        const endpoint = `/blogs/${deleteBtn.getAttribute('data-doc')}`;
+        const blogTitle = titleTag.dataset.title;
+        let confirm = prompt('Enter blog title to delete your blog post: ', blogTitle);
+
+        if (confirm === blogTitle) {
+          fetch(endpoint, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => window.location.href = data.redirect)
+            .catch(console.error);
+        } else {
+          e.preventDefault();
+        }
+      });
+    </script>
+  </body>
+
+</html>
