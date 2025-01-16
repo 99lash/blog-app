@@ -15,14 +15,17 @@ const getBlog = (req, res) => {
   const id = req.params.id;
   Blog.findById(id)
     .then(result => res.render('blogs/blog-details', { title: result.title, blog: result }))
-    .catch(console.error);
+    .catch(error => {
+      res.status(404).render('404', { title: '404', message: 'Ooops, page not found!' });
+      console.error(error);
+    });
 }
 
-const createBlogGET = (req, res) => {
+const renderCreateBlog = (req, res) => {
   res.render('blogs/create', { title: 'New blog' });
 }
 
-const createBlogPOST = (req, res) => {
+const createBlog = (req, res) => {
   const blog = new Blog(req.body);
   blog.save()
     .then(() => res.redirect('/blogs'))
@@ -38,5 +41,12 @@ const deleteBlog = (req, res) => {
     .catch(console.error);
 }
 
+const renderUpdateBlog = (req, res) => {
+  res.send('<h1> edit page <h1>');
+}
 
-module.exports = { getBlogs, getBlog, createBlogGET, createBlogPOST, deleteBlog };
+const updateBlog = (req, res) => {
+  res.send('meow');
+}
+
+module.exports = { getBlogs, getBlog, renderCreateBlog, createBlog, renderUpdateBlog, updateBlog, deleteBlog };
