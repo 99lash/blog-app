@@ -21,7 +21,7 @@ const dbURI = process.env.dbURI;
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
 // middleware logger
 app.use((req, res, next) => {
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 
 
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Home', greet: 'Home page' });
+  res.render('index.html', { title: 'Home', greet: 'Home page' });
 });
 
 // routes
@@ -50,5 +50,7 @@ app.use((err, req, res) => {
   console.error(err);
   res.status(500).send('Something went wrong.');
 });
+
+app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
 
 module.exports = app;
