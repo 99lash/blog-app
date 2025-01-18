@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+
 const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
@@ -30,20 +31,21 @@ app.use((req, res, next) => {
   const startTime = Date.now();
   res.on('finish', () => {
     const duration = Date.now() - startTime;
-    console.log(`${req.method} ${req.path} - ${duration}ms`);
-  })
+    console.log(`${req.method} ${req.originalUrl} - `, duration, 'ms');
+  });
   next();
 });
+
+app.use('/blogs', blogRoutes);
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Home', greet: 'Home page' });
 });
 
 // routes
-app.use('/blogs', blogRoutes);
 
 app.use((req, res) => {
-  res.status(404).render('404', { title: '404', message: 'Ooops, page not found!'});
+  res.status(404).render('404', { title: '404', message: 'Ooops, page not found!' });
 });
 
 app.use((err, req, res) => {

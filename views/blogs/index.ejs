@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <div>
+    <a href="/">Back to Home</a>
+  </div>
+  <div>
+    <a href="/blogs/create">Create a Blog</a>
+  </div>
+  <h1>
+    <%= greet %>
+  </h1>
+
+  <div class="blogs content">
+    <% if (blogs.length > 0 ) { %>
+      <% blogs.forEach(blog => { %>
+          <div class="blog-card">
+            <a href="/blogs/<%=blog.id%>">
+              <h3 class="title"> <%= blog.title %> </h3>
+              <p class="snippet"> <%= blog.snippet %> </p>
+            </a>
+            <span class="timeAgo"><%= blog.createdAt %></span>
+        </div>
+      <% }) %>
+    <% } else { %>
+          <p>There are no blogs to display...</p>
+    <% } %> 
+
+    <script>
+      const timePastHTML = document.querySelectorAll('span.timeAgo');
+      timePastHTML.forEach(timePast => {
+        const difference = (new Date() - Date.parse(timePast.innerHTML));
+        const dayPast = Math.floor(difference / 1000 / 60 / 60 / 24);
+        const hourPast = Math.floor(difference / 1000 / 60 / 60) % 24;
+        const minutePast = Math.floor(difference / 1000 / 60 ) % 60;
+        const secondPast = Math.floor(difference / 1000) % 60;
+        let timeAgo = 0;
+
+        if (dayPast > 0) {
+          timeAgo  =  `${dayPast} ${ (dayPast > 1 ) ? 'days' : 'day' } ago`;  
+        } else if (hourPast > 0) {
+          timeAgo  = `${hourPast} ${ (hourPast > 1 ) ? 'hours' : 'hour' } ago`;
+        } else if (minutePast > 0) {
+          timeAgo  = `${minutePast} ${ (minutePast > 1) ? 'minutes' : 'minute'} ago`;
+        } else {
+          timeAgo  = `${secondPast} ${ (secondPast > 1) ? 'seconds' : 'second'} ago`;
+        }
+        timePast.innerHTML = timeAgo;
+      });
+    </script>
+  </div>
+  <%- include('../partials/footer.ejs') %>
+</body>
+</html>

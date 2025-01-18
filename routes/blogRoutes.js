@@ -1,5 +1,8 @@
 const router = require('express').Router();
-const blogController = require('../controller/blogController');
+const blogController = require('../controllers/blogController');
+// const { blogMiddleware } = require('../middlewares/blogMiddleware');
+
+// router.use('/', blogMiddleware);
 
 // @route GET /blogs
 // @desc  Get all blogs
